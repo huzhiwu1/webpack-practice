@@ -32,7 +32,14 @@ module.exports = {
         new HtmlWebpackPlugin({
             // 复制 './src/index.html' 文件，并自动引入打包输出的所有资源（JS/CSS）
             template: Path.resolve(__dirname, "./src/index.html"),
-            filename:"index.html"
+            filename: "index.html",
+            title:"页面标题",// 替换index.html中的<%=htmlWebpackPlugin.options.title%>
+            minify: {
+                // 移除空格
+                collapseWhitespace: true,
+                // 移除注释
+                removeComments:true
+            }
         })
     ]
 }
