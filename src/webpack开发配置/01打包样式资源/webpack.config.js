@@ -1,5 +1,6 @@
 const Path = require("path")
 const HtmlWebpackPlugin = require("html-webpack-plugin")
+const MiniCssExtractPlugin = require("mini-css-extract-plugin")
 
 module.exports = {
     // 入口文件
@@ -30,7 +31,10 @@ module.exports = {
                 // 即先执行css-loader，再执行style-loader
                 use: [
                     // 创建style标签，将js中的样式资源插入执行，添加到head中生效
-                    "style-loader",
+                    // "style-loader",
+
+                    // 代替style-loader，将js中的css样式提取出文件
+                    MiniCssExtractPlugin.loader,
                     // 将css文件变成commonjs模块加载到js中，里面的内容是样式字符串
                     "css-loader"
                 ]
@@ -38,7 +42,8 @@ module.exports = {
             {
                 test: /.less$/,
                 use: [
-                    "style-loader",
+                    // "style-loader",
+                    MiniCssExtractPlugin.loader,
                     "css-loader",
                     // {
                     //     loader: "css-loader",
@@ -66,6 +71,11 @@ module.exports = {
             template: Path.resolve(__dirname, "./src/index.html"),
             // 打包后的文件名
             filename:"index.html"
+        }),
+        new MiniCssExtractPlugin({
+            // 输出的文件名
+            // contenthash:8 提取hash码的前8位
+            filename:"css/[name]-[contenthash:8].css"
         })
     ],
     // 开发模式
