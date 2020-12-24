@@ -36,7 +36,39 @@ module.exports = {
                     // 代替style-loader，将js中的css样式提取出文件
                     MiniCssExtractPlugin.loader,
                     // 将css文件变成commonjs模块加载到js中，里面的内容是样式字符串
-                    "css-loader"
+                    "css-loader",
+
+                    /**
+                     * yarn add postcss-loader autoprefixer
+                     * 创建一个postcss.config.js
+                     *  module.export={
+                     *      plugins: [
+                                require('autoprefixer')
+                            ]
+                     *  }
+                     * css兼容处理，postcss--->postcss-loader postcss-preset-env
+                     * 帮postcss找到package.json中browserslist里面的配置，通过配置加载指定的css兼容性样式
+                     * 
+                     * "browserslist":{
+                     *  //开发环境---》 设置node环境变量 process.env.NODE_ENV = development
+                     *  "development":[
+                     *      "last 1 chrome version",
+                     *      "last 1 firefox version",
+                     *      "last 1 safari version"
+                     *  ],
+                     *  "production":[
+                     *      // 兼容99.8%的浏览器
+                     *      ">0.2%",
+                     *      // 不能是已经死了的浏览器
+                     *      "not dead",
+                     *      "not op_mini all"
+                     *  ]
+                     * }
+                     * 
+                     * 
+                     * 
+                     */
+                   "postcss-loader"
                 ]
             },
             {
@@ -53,6 +85,7 @@ module.exports = {
                     // },
                     // 将less文件编译成css文件
                     // 需要下载，less-loader和less
+                    "postcss-loader",
                     "less-loader"
                 ]
             },
@@ -79,5 +112,5 @@ module.exports = {
         })
     ],
     // 开发模式
-    mode:"development"
+    mode:"production"
 }
