@@ -1,7 +1,7 @@
 const Path = require("path")
 const HtmlWebpackPlugin = require("html-webpack-plugin")
 const MiniCssExtractPlugin = require("mini-css-extract-plugin")
-
+const OptimizeCssAssetsWebpackPlugin = require("optimize-css-assets-webpack-plugin")
 module.exports = {
     // 入口文件
     entry: Path.resolve(__dirname, "./src/index.tsx"),
@@ -39,7 +39,7 @@ module.exports = {
                     "css-loader",
 
                     /**
-                     * yarn add postcss-loader autoprefixer
+                     * yarn add postcss-loader autoprefixer postcss
                      * 创建一个postcss.config.js
                      *  module.export={
                      *      plugins: [
@@ -109,8 +109,9 @@ module.exports = {
             // 输出的文件名
             // contenthash:8 提取hash码的前8位
             filename:"css/[name]-[contenthash:8].css"
-        })
+        }),
+        new OptimizeCssAssetsWebpackPlugin({})
     ],
     // 开发模式
-    mode:"production"
+    mode:"development"
 }
